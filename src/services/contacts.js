@@ -1,7 +1,19 @@
 import { ContactsCollection } from '../models/contactModel.js';
 
-const getAllContacts = async () => {
-    return ContactsCollection.find();
+const getAllContacts = async (page, perPage, sortBy, sortOrder, filter) => {
+    const { contactType, isFavourite } = filter;
+  
+    const query = {};
+    if (contactType) query.contactType = contactType;
+    if (isFavourite !== null) query.isFavourite = isFavourite;
+  
+    const totalItems = await ContactsCollection.countDocuments(query);
+    const contacts = await ContactsCollection.find(query)
+      .sort({ [sortBy]: sortOrder })
+      .skip((page - 1) * perPage)
+      .limit(perPage);
+  
+    return { contacts, totalItems };
   };
   
   const getContactById = async (contactId) => {
