@@ -4,6 +4,7 @@ import ctrlWrapper from '../utils/ctrlWrapper.js';
 import isValidId from '../middlewares/isValidId.js';
 import validateBody from '../middlewares/validateBody.js';
 import authenticate from '../middlewares/authenticate.js';
+import upload from '../middlewares/multer.js';
 import * as validation from '../validation/contacts.js';
 
 const router = Router();
@@ -18,12 +19,14 @@ router.get(
   router.post(
     '/',
     authenticate,
+    upload.single('photo'),
     validateBody(validation.contactSchema),
     ctrlWrapper(contactController.createContact),
   );
   router.patch(
     '/:contactId',
     authenticate,
+    upload.single('photo'),
     isValidId,
     validateBody(validation.updateContactSchema),
     ctrlWrapper(contactController.patchContact),

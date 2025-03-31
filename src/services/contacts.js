@@ -21,13 +21,21 @@ const getAllContacts = async (userId, page, perPage, sortBy, sortOrder, filter) 
   };
   
   const createContact = async (contactData) => {
-    return ContactsCollection.create(contactData);
+    const newContact = await ContactsCollection.create(contactData);
+
+    return newContact.toObject();
   };
   
   const updateContactById = async (contactId, userId, updateData) => {
-    return ContactsCollection.findOneAndUpdate({ _id: contactId, userId }, updateData, {
-      new: true,
-    });
+    const updatedContact = await ContactsCollection.findOneAndUpdate(
+        { _id: contactId, userId },
+        updateData,
+        {
+          new: true,
+        },
+      ).lean();
+    
+      return updatedContact;
   };
   
   const deleteContactById = async (contactId, userId) => {
