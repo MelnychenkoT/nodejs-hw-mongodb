@@ -1,16 +1,14 @@
 import nodemailer from 'nodemailer';
-import dotenv from 'dotenv';
 import createError from 'http-errors';
-
-dotenv.config();
+import { getEnvVar } from './getEnvVar.js';
 
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT,
-  secure: process.env.SMTP_PORT == 465,
+  host: getEnvVar('SMTP_HOST'),
+  port: getEnvVar('SMTP_PORT'),
+  secure: getEnvVar('SMTP_PORT') == 465,
   auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD,
+    user: getEnvVar('SMTP_USER'),
+    pass: getEnvVar('SMTP_PASSWORD'),
   },
   tls: {
     rejectUnauthorized: false,
@@ -20,7 +18,7 @@ const transporter = nodemailer.createTransport({
 const sendMail = async ({ to, subject, html }) => {
   try {
     const mailOptions = {
-      from: process.env.SMTP_FROM,
+      from: getEnvVar('SMTP_FROM'),
       to,
       subject,
       html,
