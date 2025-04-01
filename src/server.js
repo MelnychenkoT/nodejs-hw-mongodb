@@ -15,23 +15,16 @@ export const setupServer = () => {
   app.use(express.json());
   app.use(cors());
   app.use(cookieParser());
+  app.use(pino());
 
-  app.use(
-    pino({
-      transport: {
-        target: 'pino-pretty',
-      },
-    }),
-  );
+  app.use('/contacts', contactsRouter);
+  app.use('/auth', authRouter);
 
   app.get('/', (req, res) => {
     res.json({
       message: 'Hellow World;',
     });
   });
-
-  app.use('/contacts', contactsRouter);
-  app.use('/auth', authRouter);
 
   app.use('*', notFoundHandler);
   app.use(errorHandler);

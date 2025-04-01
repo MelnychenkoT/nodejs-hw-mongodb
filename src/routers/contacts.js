@@ -26,8 +26,8 @@ router.get(
   router.patch(
     '/:contactId',
     authenticate,
-    upload.single('photo'),
     isValidId,
+    upload.single('photo'),
     validateBody(validation.updateContactSchema),
     ctrlWrapper(contactController.patchContact),
   );

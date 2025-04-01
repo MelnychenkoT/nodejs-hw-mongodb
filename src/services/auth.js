@@ -56,8 +56,7 @@ const refreshSession = async (oldRefreshToken) => {
 
   await Session.deleteOne({ _id: session._id });
 
-  const accessToken = randomBytes(30).toString('base64');
-  const refreshToken = randomBytes(30).toString('base64');
+  const { accessToken, refreshToken } = generateTokens();
 
   await Session.create({
     userId: session.userId,
