@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import { getEnvVar } from "./getEnvVar.js"; // Імпортуємо утиліту getEnvVar
+import { getEnvVar } from "./utils/getEnvVar.js"; // Імпортуємо утиліту getEnvVar
 
 const transporter = nodemailer.createTransport({
   host: getEnvVar("SMTP_HOST"), // Переконайся, що тут smtp-relay.brevo.com
