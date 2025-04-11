@@ -11,6 +11,7 @@ import notFoundHandler from './middlewares/notFoundHandler.js';
 import cookieParser from 'cookie-parser';
 import authRouter from './routers/auth.js';
 
+
 const PORT = Number(getEnvVar('PORT', '3000'));
 const swaggerDocument = JSON.parse(
   fs.readFileSync(path.resolve('docs', 'swagger.json'), 'utf-8'),
